@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -24,9 +25,12 @@ func main(){
 	// ifconfig eth0 down
 	// ifconfig eth0 hw ether 00:
 	// ifconfig eth0 up
-   executeCommand( "sudo",[]string{"ifconfig","en0","down"}  )
-   executeCommand( "sudo",[]string{"ifconfig","en0","hw","ether","00:00:00:00:00:00"}  )
-   executeCommand( "sudo",[]string{"ifconfig","en0","up"}  )
+	iface := flag.String( "iface","en0","Interface  you want to change MAC address" )
+	newMac := flag.String( "newMac","","input new MAC address" )
+    flag.Parse()
+   executeCommand( "sudo",[]string{"ifconfig",*iface,"down"}  )
+   executeCommand( "sudo",[]string{"ifconfig",*iface,"hw","ether",*newMac}  )
+   executeCommand( "sudo",[]string{"ifconfig",*iface,"up"}  )
 
 
 }
